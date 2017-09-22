@@ -37,7 +37,7 @@ module Decidim
       end
 
       def copy_migrations
-        rails_command "railties:install:migrations"
+        rails "railties:install:migrations"
         recreate_db if options[:recreate_db]
       end
 
@@ -118,16 +118,20 @@ module Decidim
       private
 
       def recreate_db
-        rails_command "db:environment:set db:drop" unless ENV["CI"]
-        rails_command "db:create"
+        rails "db:environment:set", "db:drop" unless ENV["CI"]
+        rails "db:create"
 
         if options[:seed_db]
-          rails_command "db:migrate db:seed", env: "development"
+          rails "db:migrate", "db:seed", env: "development"
         else
-          rails_command "db:migrate", env: "development"
+          rails "db:migrate", env: "development"
         end
 
-        rails_command "db:migrate", env: "test"
+        rails "db:migrate", env: "test"
+      end
+
+      def rails(*args, env: "development")
+        abort unless system({ "RAILS_ENV" => env }, "bin/rails", *args)
       end
 
       def scss_variables
