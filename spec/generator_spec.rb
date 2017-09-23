@@ -5,6 +5,14 @@ describe "Application generation" do
 
   after { FileUtils.rm_rf("tmp/test_app") }
 
+  context "without flags" do
+    let(:command) { "bin/decidim tmp/test_app" }
+
+    it "successfully generates application" do
+      expect(status).to eq(true)
+    end
+  end
+
   context "with --edge flag" do
     let(:command) { "bin/decidim --edge tmp/test_app" }
 
