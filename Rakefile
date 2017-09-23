@@ -50,11 +50,9 @@ task :development_app do
     sh "rm -fR development_app", verbose: false
   end
 
-  Bundler.with_clean_env do
-    Decidim::Generators::AppGenerator.start(
-      ["development_app", "--path", "..", "--recreate_db", "--seed_db", "--demo"]
-    )
-  end
+  Bundler.clean_system(
+    "bin/decidim", "development_app", "--path", "..", "--recreate_db", "--seed_db", "--demo"
+  )
 end
 
 desc "Generates a development app based on Docker."
