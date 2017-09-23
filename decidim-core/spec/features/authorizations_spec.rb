@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Authorizations", type: :feature, perform_enqueued: true do
+describe "Authorizations", type: :feature, perform_enqueued: true, with_authorizations: true do
   before do
     switch_to_host(organization.host)
   end
@@ -15,7 +15,6 @@ describe "Authorizations", type: :feature, perform_enqueued: true do
 
     context "when one authorization has been configured" do
       before do
-        Decidim.authorization_handlers = [Decidim::DummyAuthorizationHandler]
         visit decidim.root_path
         find(".sign-in-link").click
 
@@ -126,8 +125,8 @@ describe "Authorizations", type: :feature, perform_enqueued: true do
     context "when no authorizations are configured" do
       let(:authorizations) { [] }
 
-      before do
-        Decidim.authorization_handlers = []
+      around do |example|
+        with_authorization_handlers([]) { example.run }
       end
 
       it "doesn't list authorizations" do

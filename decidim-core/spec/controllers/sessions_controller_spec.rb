@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim
   module Devise
-    describe SessionsController, type: :controller do
+    describe SessionsController, type: :controller, with_authorizations: true do
       routes { Decidim::Core::Engine.routes }
 
       describe "after_sign_in_path_for" do
@@ -39,8 +39,8 @@ module Decidim
               end
 
               context "otherwise" do
-                before do
-                  Decidim.authorization_handlers = []
+                around do |example|
+                  with_authorization_handlers([]) { example.run }
                 end
 
                 it { is_expected.to eq("/") }

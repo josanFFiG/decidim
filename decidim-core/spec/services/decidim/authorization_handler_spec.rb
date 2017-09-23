@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  describe AuthorizationHandler do
+  describe AuthorizationHandler, with_authorizations: true do
     let(:handler) { described_class.new(params) }
     let(:params) { {} }
 
@@ -55,8 +55,8 @@ module Decidim
           let(:name) { "decidim/dummy_authorization_handler" }
 
           context "when the handler is not configured" do
-            before do
-              Decidim.config.authorization_handlers = []
+            around do |example|
+              with_authorization_handlers([]) { example.run }
             end
 
             it { is_expected.to eq(nil) }
