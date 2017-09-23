@@ -118,8 +118,8 @@ module Decidim
       def recreate_db
         rails_command "db:environment:set db:drop" unless ENV["CI"]
         rails_command "db:create"
-        rails_command "db:migrate"
-        rails_command "db:test:prepare"
+        rails_command "db:migrate", env: "development"
+        rails_command "db:migrate", env: "test"
       end
 
       def scss_variables
