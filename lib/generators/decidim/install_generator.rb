@@ -132,11 +132,6 @@ module Decidim
       def rails(*args, env: "development")
         abort unless system({ "RAILS_ENV" => env }, "bin/rails", *args)
       end
-
-      def scss_variables
-        variables = File.join(Gem.loaded_specs["decidim-core"].full_gem_path, "app", "assets", "stylesheets", "decidim", "_variables.scss")
-        File.read(variables).split("\n").map { |line| "// #{line}".gsub(" !default", "") }.join("\n")
-      end
     end
   end
 end
