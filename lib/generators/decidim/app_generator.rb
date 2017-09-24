@@ -2,7 +2,6 @@
 
 require "rails/generators"
 require "rails/generators/rails/app/app_generator"
-require_relative "../../decidim/version"
 require_relative "install_generator"
 
 module Decidim
