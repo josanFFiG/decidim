@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 describe "Application generation" do
-  let(:status) { Bundler.clean_system(command, out: File::NULL) }
+  let(:status) { Bundler.clean_system(env, command, out: File::NULL) }
+
+  let(:env) do
+    { "RUBYOPT" => "-E UTF-8" }
+  end
 
   after { FileUtils.rm_rf("tmp/test_app") }
 
@@ -15,6 +19,14 @@ describe "Application generation" do
     let(:command) { "bin/decidim tmp/test_app" }
 
     it_behaves_like "a sane generator"
+
+    context "and non utf-8 encoding" do
+      let(:env) do
+        { "RUBYOPT" => "-E ASCII" }
+      end
+
+      it_behaves_like "a sane generator"
+    end
   end
 
   context "with --edge flag" do
