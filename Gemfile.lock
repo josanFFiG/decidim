@@ -46,6 +46,7 @@ PATH
       decidim-api (= 0.7.0.pre.pre)
       devise (~> 4.3)
       devise-i18n (~> 1.2.0)
+      faker (~> 1.8.4)
       file_validators (~> 2.1.0)
       foundation-rails (~> 6.3.0)
       foundation_rails_helper (~> 3.0.0.rc)
@@ -118,7 +119,6 @@ PATH
       db-query-matchers (~> 0.9.0)
       decidim (= 0.7.0.pre.pre)
       factory_girl_rails
-      faker (~> 1.8.4)
       i18n-tasks (= 0.9.18)
       launchy
       listen (~> 3.1.0)
